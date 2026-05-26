@@ -27,13 +27,23 @@ st.title("🤟 Indian Sign Language Assistive System")
 st.caption("A clean computer vision platform for real-time gesture translation.")
 st.write("---")
 
-# Load Model
+# ======================================================================
+# 🚀 SMART MODEL DOWNLOAD ENGINE PLACED RIGHT HERE!
+# ======================================================================
 @st.cache_resource
 def load_model():
-    with open('model.p', 'rb') as f:
+    model_path = 'model.p'
+    # If the model file isn't already on the Streamlit server, download it from your release link!
+    if not os.path.exists(model_path):
+        # ⚠️ MAKE SURE TO PASTE YOUR COPIED GITHUB RELEASE LINK ADDRESS BELOW!
+        url = "https://github.com/gajjjar5802-coder/isl-translator/releases/download/v1.0/model.p" 
+        with st.spinner("Downloading AI Model Brain from cloud... Please wait..."):
+            urllib.request.urlretrieve(url, model_path)
+            
+    with open(model_path, 'rb') as f:
         return pickle.load(f)['model']
-model = load_model()
 
+model = load_model()
 # --- UPDATED: Max hands changed to 2 ---
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands(static_image_mode=False, max_num_hands=2, min_detection_confidence=0.7)
